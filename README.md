@@ -28,5 +28,4 @@ The library uses Python's decorators and metaclasses to track dependencies and m
 
 ## Limitations
 
-- For now, when you set a property in an instance you should use 'sync_input()' to trigger the update; `example.sync_input('x', 1)`. 
 - We look for references of 'self' in the method body, so it may not cater for the situation where other methods are updating a dependency.
