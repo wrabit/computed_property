@@ -20,6 +20,18 @@ class Example(HasComputedProperties):
         return self.x * self.y
 
 
+class ComputedDependents(HasComputedProperties):
+    a: int
+
+    @computed_property
+    def b(self):
+        return self.a + 5
+
+    @computed_property
+    def c(self):
+        return self.a * self.b
+
+
 class TestComputedProperty(unittest.TestCase):
     def test_computed_property_evaluation(self):
         example = Example(5, 3)
@@ -47,6 +59,11 @@ class TestComputedProperty(unittest.TestCase):
         example.z = 100  # Change a non-dependency
         self.assertEqual(example.my_computed, first_result)  # Should use cached value
 
+    def test_computeds_that_depend_on_other_computeds(self):
+        so = ComputedDependents()
+        so.a = 5
+        self.assertEqual(so.b, 10)
+        self.assertEqual(so.c, 50)
 
 if __name__ == '__main__':
     unittest.main()
