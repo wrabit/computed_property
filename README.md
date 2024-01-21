@@ -22,11 +22,27 @@ class Example(HasComputedProperties):
 
 In this example, `my_computed` is a computed property dependent on `x` and `y`. If either `x` or `y` changes, `my_computed` is automatically recalculated and updated.
 
+```python
+test = Example(1,2)
+
+print(test.my_computed)
+# computed property is calculated
+> 2
+
+print(test.my_computed)
+# cached version is used
+> 2
+
+test.x = 2
+print(test.my_computed)
+# computed property is re-calculated
+> 4
+```
+
 ## How it Works
 
 The library uses Python's decorators and metaclasses to track dependencies and manage the caching of computed properties. Dependencies are determined automatically through code introspection and looking up the @computed_property function's abstract syntax tree (AST).
 
 ## Limitations
 
-- For now, when you set a property in an instance you should use 'sync_input()' to trigger the update; `example.sync_input('x', 1)`. 
 - We look for references of 'self' in the method body, so it may not cater for the situation where other methods are updating a dependency.
