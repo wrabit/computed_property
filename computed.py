@@ -1,4 +1,3 @@
-import unittest
 import ast
 import inspect
 import textwrap
@@ -22,6 +21,7 @@ class ComputedProperty:
 
 
 class DependencyExtractor(ast.NodeVisitor):
+    """Use AST to extract dependencies from a function, looking specifically for attributes referencing 'self'"""
     def __init__(self):
         self.dependencies = set()
 
@@ -32,12 +32,7 @@ class DependencyExtractor(ast.NodeVisitor):
 
 
 def extract_dependencies(func):
-    # get method source code
-    source = inspect.getsource(func)
-
-    # dedent source code because we're taking this method outside of the class and parsing it
-    source = textwrap.dedent(source)
-
+    source = textwrap.dedent(inspect.getsource(func))
     tree = ast.parse(source)
     extractor = DependencyExtractor()
     extractor.visit(tree)
@@ -60,8 +55,8 @@ class HasComputedProperties(metaclass=ComputedPropertyMeta):
         super().__init__()
 
     def __setattr__(self, name, value):
+        """Invalidate cached computed properties if their dependencies are changed."""
         super().__setattr__(name, value)
-        # Invalidate cached computed properties if their dependencies are changed
         for prop in self._computed_properties:
             if name in prop.func.dependencies:
                 prop.invalidate(self)
