@@ -1,6 +1,6 @@
 # @computed_property
 
-`@computed_property` is inspired by similar concepts in Vue.js, Svelte, and Laravel Livewire. It aims to introduce computed properties to Python, allowing properties within a class to be automatically recalculated and cached based on their dependencies.
+`@computed_property` is inspired by similar concepts in Vue.js, Svelte, and Laravel Livewire to bring computed properties to Python, allowing properties within a class to be automatically recalculated and cached based on their dependencies.
 
 ## Concept
 
