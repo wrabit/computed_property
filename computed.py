@@ -59,7 +59,7 @@ class HasComputedProperties(metaclass=ComputedPropertyMeta):
     def __init__(self):
         super().__init__()
 
-    def sync_input(self, name, value):
+    def __setattr__(self, name, value):
         super().__setattr__(name, value)
         # Invalidate cached computed properties if their dependencies are changed
         for prop in self._computed_properties:

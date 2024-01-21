@@ -37,7 +37,7 @@ class TestComputedProperty(unittest.TestCase):
         self.assertEqual(example.fake_operation_count, 0)
         _ = example.my_computed  # Initial calculation
         self.assertEqual(example.fake_operation_count, 1)
-        example.sync_input('x', 10)  # Change a dependency
+        example.x = 10  # Change a dependency
         self.assertEqual(example.my_computed, 30)  # Recalculation should happen
         self.assertEqual(example.fake_operation_count, 2)
 
