@@ -1,8 +1,12 @@
 # @computed_property
 
-An attempt to create computed properties ala vue, svelte, laravel livewire but in python.
+`@computed_property` is inspired by similar concepts in Vue.js, Svelte, and Laravel Livewire. It aims to introduce computed properties to Python, allowing properties within a class to be automatically recalculated and cached based on their dependencies.
 
-Take this class:
+## Concept
+
+A computed property acts like a regular class property but with an underlying method that calculates its value. This value is cached for efficiency. Whenever a "dependency" (an attribute that the computed property relies on) changes, the computed property automatically recalculates and updates its value.
+
+## Example
 
 ```python
 class Example(HasComputedProperties):
@@ -16,4 +20,13 @@ class Example(HasComputedProperties):
         return self.x * self.y
 ```
 
-For all intents and purposes, my_computed acts like a cached property but should a dependency of `my_computed` change (x or y) it will automatically be recalculated and cached.
+In this example, `my_computed` is a computed property dependent on `x` and `y`. If either `x` or `y` changes, `my_computed` is automatically recalculated and updated.
+
+## How it Works
+
+The library uses Python's decorators and metaclasses to track dependencies and manage the caching of computed properties. Dependencies are determined automatically through code introspection and looking up the @computed_property function's abstract syntax tree (AST).
+
+## Limitations
+
+- For now, when you set a property in an instance you should use 'sync_input()' to trigger the update; `example.sync_input('x', 1)`. 
+- We look for references of 'self' in the method body, so it may not cater for the situation where other methods are updating a dependency.
