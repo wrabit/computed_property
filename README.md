@@ -9,6 +9,8 @@ A computed property acts like a regular class property but with an underlying me
 ## Example
 
 ```python
+from computed import computed_property, HasComputedProperties
+
 class Example(HasComputedProperties):
     def __init__(self, x, y):
         super().__init__()
