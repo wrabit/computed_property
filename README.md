@@ -44,7 +44,3 @@ print(test.my_computed)
 ## How it Works
 
 The library uses Python's decorators and metaclasses to track dependencies and manage the caching of computed properties. Dependencies are determined automatically through code introspection and looking up the @computed_property function's abstract syntax tree (AST).
-
-## Limitations
-
-- We look for references of 'self' in the method body, so it may not cater for the situation where other methods are updating a dependency.
